@@ -36,6 +36,9 @@ class SharpCleaner:
 
     def clean_folder(self, folder, apply_changes=True):
         files = list(glob.iglob(folder + '//**//*.cs', recursive=True))
+        files2 = list(glob.iglob(folder + '//**//*.xaml', recursive=True))
+        for file in files2:
+            files.append(file)
         return Parallel(n_jobs=-1)(delayed(self.clean_file)(file, apply_changes) for file in files)
 
     def _clean(self, fragments):
